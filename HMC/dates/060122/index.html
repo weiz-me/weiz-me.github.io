@@ -356,6 +356,8 @@
                 panorama.dispose();
                 viewer.remove( panorama );
                 panorama = null;
+                viewer.dispose();}
+
               }
 
               closeButton.addEventListener( 'click', function () {
@@ -366,6 +368,7 @@
                 progressBar.style.opacity = 1;
 
                 panoramaContainer.classList.remove( 'open' );
+                Dispose();
 
               }, false );
 
