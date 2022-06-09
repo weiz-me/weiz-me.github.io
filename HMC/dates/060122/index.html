@@ -225,6 +225,7 @@
 
           }
 
+
           photo.addEventListener( 'click', function () {
 
             // Keep one panorama
@@ -232,6 +233,7 @@
 
             // Dynamically generate panorama
             if ( this.type === 'image' ) {
+
 
               panorama = new PANOLENS.ImagePanorama( this.url );
 
@@ -296,6 +298,7 @@
                 viewer.add( panorama25 );
                 viewer.add( panorama26 );
                 viewer.add( panorama27 );
+                
               // Pair
               panorama1.link( panorama2, new THREE.Vector3( -10,0,0 ),1);
               panorama2.link( panorama3, new THREE.Vector3( -10,0,0 ),1);
@@ -355,10 +358,9 @@
 
                 panorama.dispose();
                 viewer.remove( panorama );
-                panorama = null;
-                viewer.dispose();}
 
-              }
+                panorama = null;
+              viewer.dispose();}
 
               closeButton.addEventListener( 'click', function () {
 
@@ -369,7 +371,6 @@
 
                 panoramaContainer.classList.remove( 'open' );
                 Dispose();
-
               }, false );
 
             } else if ( this.type === 'video' ) {
@@ -416,7 +417,7 @@
       function disposePanorama () {
 
         panorama.dispose();
-        viewer.remove( panorama );
+        viewer.remove();
         panorama = null;
       }
 
