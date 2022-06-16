@@ -81,10 +81,12 @@
    const panorama23 = new PANOLENS.ImagePanorama( "images/06102022-panorama23.JPG" );
    const panorama24 = new PANOLENS.ImagePanorama( "images/06102022-panorama24.JPG" );
    const panorama25 = new PANOLENS.ImagePanorama( "images/06102022-panorama25.JPG" );
+   const viewer = new PANOLENS.Viewer( );
 
     //chose start point
 
-        viewer.add( panorama2 );
+
+        viewer.add( panorama25 );
       //viewer.add( panorama1);
       viewer.add( panorama2 );
       viewer.add( panorama3 );
@@ -110,6 +112,9 @@
       viewer.add( panorama23 );
       viewer.add( panorama24 );
       viewer.add( panorama25 );
+      viewer.setPanorama( targetPanorama );
+
+
 
 
     // Pair (back,height,right)

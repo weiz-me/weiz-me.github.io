@@ -3,9 +3,20 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, shrink-to-fit=no">
-    <title>Harlem Meer Project 6/10/22</title>
+    <title>HMC - June 10, 2022</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../../css/fontAwesome.css">
+    <link rel="stylesheet" href="../../css/light-box.css">
+    <link rel="stylesheet" href="../../css/owl-carousel.css">
+    <link rel="stylesheet" href="../../css/templatemo-style.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+
     <style>
       html, body {
         margin: 0;
@@ -33,6 +44,7 @@
         display: flex;
         flex-wrap: wrap;
         margin-bottom: 4px;
+        padding-left: 23%
       }
 
       .title {
@@ -51,6 +63,7 @@
         position: fixed;
         display: flex;
         width: 100%;
+        padding-left: 25%;
         height: 100%;
         top: 0;
         background: rgba(0,0,0,0.9);
@@ -112,12 +125,31 @@
   </head>
 
   <body>
+    <div class="sidebar-navigation hidde-sm hidden-xs">
+        <div class="logo">
+          <a href="../../index.html"><em>Harlem</em>Meer<em><br>June 10, 2022</em></a>
+        </div>
+        <nav>
+            <ul>
+            </ul>
+        </nav>
+        <ul class="social-icons">
+            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+            <li><a href="#"><i class="fa fa-rss"></i></a></li>
+            <li><a href="#"><i class="fa fa-behance"></i></a></li>
+        </ul>
+    </div>
 
     <div id="gallery-container">
-      <div class="title">Harlem Meer Project</div>
-      <div class="credit">June 10, 2021 - Select A Starting Point</div>
+
 
     </div>
+
+
+
+
 
     <div id="panorama-container">
 
@@ -168,7 +200,7 @@
         "images/06102022-panorama19.JPG",
         "images/06102022-panorama20.JPG",
         "images/06102022-panorama21.JPG",
-        "images/06102022-panorama22.JPG",
+        "images/0610H2022-panorama22.JPG",
         "images/06102022-panorama23.JPG",
         "images/06102022-panorama24.JPG",
         "images/06102022-panorama25.JPG",
@@ -246,38 +278,6 @@
               panorama24 = new PANOLENS.ImagePanorama( "images/06102022-panorama24.JPG" );
               panorama25 = new PANOLENS.ImagePanorama( "images/06102022-panorama25.JPG" );
 
-              text = this.url;
-              var panorama = window['panorama'+text.substr(24,text.length-28)];
-              //chose start point
-
-                  viewer.add( panorama );
-                //viewer.add( panorama1);
-                viewer.add( panorama2 );
-                viewer.add( panorama3 );
-                viewer.add( panorama4 );
-                viewer.add( panorama5 );
-                viewer.add( panorama6 );
-                viewer.add( panorama7 );
-                viewer.add( panorama8 );
-                viewer.add( panorama9 );
-                viewer.add( panorama10 );
-                viewer.add( panorama11 );
-                viewer.add( panorama12 );
-                viewer.add( panorama13 );
-                viewer.add( panorama14 );
-                viewer.add( panorama15 );
-                viewer.add( panorama16 );
-                viewer.add( panorama17 );
-                viewer.add( panorama18 );
-                viewer.add( panorama19 );
-                viewer.add( panorama20 );
-                viewer.add( panorama21 );
-                viewer.add( panorama22 );
-                viewer.add( panorama23 );
-                viewer.add( panorama24 );
-                viewer.add( panorama25 );
-
-
               // Pair (back,height,right)
               //panorama1.link( panorama2, new THREE.Vector3( 0,0,-10 ),1);
               panorama2.link( panorama3, new THREE.Vector3( 10,0,0 ),1);
@@ -328,6 +328,42 @@
             panorama23.link( panorama22, new THREE.Vector3( -10,0,0 ),1);
             panorama24.link( panorama23, new THREE.Vector3( -10,0,0 ),1);
             panorama25.link( panorama24, new THREE.Vector3( 0,0,-10 ),1);
+              text = this.url;
+              var panorama = window['panorama'+text.substr(24,text.length-28)];
+              //chose start point
+
+                  viewer.add( panorama );
+                //viewer.add( panorama1);
+                viewer.add( panorama2 );
+                viewer.add( panorama3 );
+                viewer.add( panorama4 );
+                viewer.add( panorama5 );
+                viewer.add( panorama6 );
+                viewer.add( panorama7 );
+                viewer.add( panorama8 );
+                viewer.add( panorama9 );
+                viewer.add( panorama10 );
+                viewer.add( panorama11 );
+                viewer.add( panorama12 );
+                viewer.add( panorama13 );
+                viewer.add( panorama14 );
+                viewer.add( panorama15 );
+                viewer.add( panorama16 );
+                viewer.add( panorama17 );
+                viewer.add( panorama18 );
+                viewer.add( panorama19 );
+                viewer.add( panorama20 );
+                viewer.add( panorama21 );
+                viewer.add( panorama22 );
+                viewer.add( panorama23 );
+                viewer.add( panorama24 );
+                viewer.add( panorama25 );
+
+
+
+            text = this.url;
+            var panorama = window['panorama'+text.substr(24,text.length-28)];
+            viewer.setPanorama( panorama );
 
 
               function disposePanorama () {

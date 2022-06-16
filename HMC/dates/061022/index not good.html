@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, shrink-to-fit=no">
+    <title>Harlem Meer Project 6/10/22</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+    <style>
+      html, body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        font-family: 'Roboto', sans-serif;
+        background-color: #eee;
+      }
+
+      a:link, a:visited{
+        color: #bdc3c7;
+      }
+
+      .credit{
+        position: relative;
+        text-align: center;
+        width: 100%;
+        padding:  0;
+        color: #fff;
+        background-color: black;
+        opacity: 0.9;
+      }
+
+      #gallery-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 4px;
+      }
+
+      .title {
+        width: 100%;
+        height: 80px;
+        line-height: 80px;
+        text-align: center;
+        font-size: 24px;
+        color: #fff;
+        background-color: black;
+        opacity: .9;
+
+      }
+
+      #panorama-container {
+        position: fixed;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        background: rgba(0,0,0,0.9);
+        transform: scale(0,0);
+        opacity: 0;
+        -webkit-transition: all 0.5s ease-out;
+        transition: all 0.5s ease-out;
+      }
+
+      #panorama-container.open {
+        opacity: 1;
+        transform: scale(1,1);
+      }
+
+      .photo {
+        flex-grow: 1;
+        width: 360px;
+        height: 240px;
+        background-size: cover;
+        margin: 4px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+      }
+
+      .photo:hover {
+        border-color: #000;
+      }
+
+      #progress-bar {
+        position: fixed;
+        top: 0;
+        width: 0;
+        height: 5px;
+        background-color: #fff;
+        transition: opacity 0.5s ease;
+      }
+
+      .close {
+        width: 44px;
+        height: 44px;
+        position: absolute;
+        right: 0;
+        margin: 20px;
+        cursor: pointer;
+      }
+
+      .close > i {
+        color: #fff;
+        font-size: 44px;
+      }
+
+      #main-container {
+        width: 100%;
+        height: 80%;
+        align-self: center;
+        background-color: #000;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div id="gallery-container">
+      <div class="title">Harlem Meer Project</div>
+      <div class="credit">June 10, 2021 - Select A Starting Point</div>
+
+    </div>
+
+    <div id="panorama-container">
+
+      <!-- Progress bar -->
+      <div id="progress-bar"></div>
+
+      <!-- Close button -->
+      <div class="close">
+        <i class="material-icons">close</i>
+      </div>
+
+      <!-- Main container -->
+      <div id="main-container">
+
+      </div>
+    </div>
+
+    <script src="../../js/three.min.js"></script>
+    <script src="../../js/panolens.min.js"></script>
+    <script src="../../js/psw.js"></script>
+
+    <script>
+
+      var gallery, galleryContainer, photo, desc, panoramaContainer, mainContainer, closeButton, animationEndEvents, viewer, panorama, progress, path, format, url;
+
+      gallery = [ '1', '2', '3', '4', 'leaf', 'lookout', 'pier', 'rock', 'suite', 'tent' ];
+      path = 'asset/textures/equirectangular/';
+      format = '.jpg';
+
+      urls = [
+        //"images/06102022-panorama1.JPG",
+        "images/06102022-panorama2.JPG",
+        "images/06102022-panorama3.JPG",
+        "images/06102022-panorama4.JPG",
+        "images/06102022-panorama5.JPG",
+        "images/06102022-panorama6.JPG",
+        "images/06102022-panorama7.JPG",
+        "images/06102022-panorama8.JPG",
+        "images/06102022-panorama9.JPG",
+        "images/06102022-panorama11.JPG",
+        "images/06102022-panorama22.JPG",
+        "images/06102022-panorama13.JPG",
+        "images/06102022-panorama14.JPG",
+        "images/06102022-panorama15.JPG",
+        "images/06102022-panorama16.JPG",
+        "images/06102022-panorama17.JPG",
+        "images/06102022-panorama18.JPG",
+        "images/06102022-panorama19.JPG",
+        "images/06102022-panorama20.JPG",
+        "images/06102022-panorama21.JPG",
+        "images/0610H2022-panorama22.JPG",
+        "images/06102022-panorama23.JPG",
+        "images/06102022-panorama24.JPG",
+        "images/06102022-panorama25.JPG",
+
+      ];
+
+      galleryContainer = document.getElementById( 'gallery-container' );
+      panoramaContainer = document.getElementById( 'panorama-container' );
+      mainContainer = document.getElementById( 'main-container' );
+      progressBar = document.getElementById( 'progress-bar' );
+      closeButton = panoramaContainer.querySelector( '.close' );
+
+      function buildGallery () {
+
+        for ( i = 0; i < urls.length; i++ ) {
+
+          url = urls[i];
+
+          photo = document.createElement( 'div' );
+          photo.style.backgroundImage = 'url(' + url + ')';
+          photo.classList.add( 'photo' );
+
+          if ( this.url.indexOf("1941-battle.jpg") !== -1 ) {
+
+            photo.url = "asset/textures/video/1941-battle-low.mp4";
+            photo.type = 'video';
+
+          } else if ( this.url.indexOf("panorama_video.jpg") !== -1 ) {
+
+            photo.url = "asset/textures/video/ClashofClans.mp4";
+            photo.type = 'video';
+
+          } else {
+
+            photo.url = url;
+            photo.type = 'image';
+
+          }
+
+
+          photo.addEventListener( 'click', function () {
+
+            // Keep one panorama
+            if ( panorama ) { return;}
+
+            // Dynamically generate panorama
+            if ( this.type === 'image' ) {
+
+
+              panorama = new PANOLENS.ImagePanorama( this.url );
+
+              //panorama1 = new PANOLENS.ImagePanorama( "images/06102022-panorama1.JPG" );
+              panorama2 = new PANOLENS.ImagePanorama( "images/06102022-panorama2.JPG" );
+              panorama3 = new PANOLENS.ImagePanorama( "images/06102022-panorama3.JPG" );
+              panorama4 = new PANOLENS.ImagePanorama( "images/06102022-panorama4.JPG" );
+              panorama5 = new PANOLENS.ImagePanorama( "images/06102022-panorama5.JPG" );
+              panorama6 = new PANOLENS.ImagePanorama( "images/06102022-panorama6.JPG" );
+              panorama7 = new PANOLENS.ImagePanorama( "images/06102022-panorama7.JPG" );
+              panorama8 = new PANOLENS.ImagePanorama( "images/06102022-panorama8.JPG" );
+              panorama9 = new PANOLENS.ImagePanorama( "images/06102022-panorama9.JPG" );
+              panorama10 = new PANOLENS.ImagePanorama( "images/06102022-panorama10.JPG" );
+              panorama11 = new PANOLENS.ImagePanorama( "images/06102022-panorama11.JPG" );
+              panorama12 = new PANOLENS.ImagePanorama( "images/06102022-panorama12.JPG" );
+              panorama13 = new PANOLENS.ImagePanorama( "images/06102022-panorama13.JPG" );
+              panorama14 = new PANOLENS.ImagePanorama( "images/06102022-panorama14.JPG" );
+              panorama15 = new PANOLENS.ImagePanorama( "images/06102022-panorama15.JPG" );
+              panorama16 = new PANOLENS.ImagePanorama( "images/06102022-panorama16.JPG" );
+              panorama17 = new PANOLENS.ImagePanorama( "images/06102022-panorama17.JPG" );
+              panorama18 = new PANOLENS.ImagePanorama( "images/06102022-panorama18.JPG" );
+              panorama19 = new PANOLENS.ImagePanorama( "images/06102022-panorama19.JPG" );
+              panorama20 = new PANOLENS.ImagePanorama( "images/06102022-panorama20.JPG" );
+              panorama21 = new PANOLENS.ImagePanorama( "images/06102022-panorama21.JPG" );
+              panorama22 = new PANOLENS.ImagePanorama( "images/06102022-panorama22.JPG" );
+              panorama23 = new PANOLENS.ImagePanorama( "images/06102022-panorama23.JPG" );
+              panorama24 = new PANOLENS.ImagePanorama( "images/06102022-panorama24.JPG" );
+              panorama25 = new PANOLENS.ImagePanorama( "images/06102022-panorama25.JPG" );
+
+              // Pair (back,height,right)
+              //panorama1.link( panorama2, new THREE.Vector3( 0,0,-10 ),1);
+              panorama2.link( panorama3, new THREE.Vector3( 10,0,0 ),1);
+              panorama3.link( panorama4, new THREE.Vector3( 10,0,0 ),1);
+              panorama4.link( panorama5, new THREE.Vector3( 10,0,0 ),1);
+              panorama5.link( panorama6, new THREE.Vector3( 10,0,0 ),1);
+              panorama6.link( panorama7, new THREE.Vector3( 10,0,0 ),1);
+              panorama7.link( panorama8, new THREE.Vector3( 10,0,0 ),1);
+              panorama8.link( panorama9, new THREE.Vector3( 0,0,10 ),1);
+              panorama9.link( panorama10, new THREE.Vector3( -10,0,0 ),1);
+              panorama10.link( panorama11, new THREE.Vector3( -10,0,0 ),1);
+              panorama11.link( panorama12, new THREE.Vector3( -10,0,0 ),1);
+              panorama12.link( panorama13, new THREE.Vector3( 0,0,-10 ),1);
+              panorama13.link( panorama14, new THREE.Vector3( 0,0,-10 ),1);
+              panorama14.link( panorama15, new THREE.Vector3( 0,0,-10 ),1);
+              panorama15.link( panorama16, new THREE.Vector3( 10,0,0 ),1);
+              panorama16.link( panorama17, new THREE.Vector3( 10,0,0 ),1);
+              panorama17.link( panorama18, new THREE.Vector3( 10,0,0 ),1);
+              panorama18.link( panorama19, new THREE.Vector3( 10,0,0 ),1);
+              panorama19.link( panorama20, new THREE.Vector3( 10,0,0 ),1);
+              panorama20.link( panorama21, new THREE.Vector3( 10,0,-10 ),1);
+              panorama21.link( panorama22, new THREE.Vector3( 10,0,0 ),1);
+              panorama22.link( panorama23, new THREE.Vector3( 10,0,0 ),1);
+              panorama23.link( panorama24, new THREE.Vector3( 10,0,0 ),1);
+              panorama24.link( panorama25, new THREE.Vector3( 0,0,10 ),1);
+
+
+              panorama3.link( panorama2, new THREE.Vector3( -10,0,0 ),1);
+              panorama4.link( panorama3, new THREE.Vector3( -10,0,0 ),1);
+              panorama5.link( panorama4, new THREE.Vector3( -10,0,0 ),1);
+              panorama6.link( panorama5, new THREE.Vector3( -10,0,0 ),1);
+              panorama7.link( panorama6, new THREE.Vector3( -10,0,0 ),1);
+              panorama8.link( panorama7, new THREE.Vector3( -10,0,0 ),1);
+              panorama9.link( panorama8, new THREE.Vector3( 10,0,-10 ),1);
+              panorama10.link( panorama9, new THREE.Vector3( 10,0,0 ),1);
+              panorama11.link( panorama10, new THREE.Vector3( 10,0,0 ),1);
+              panorama12.link( panorama11, new THREE.Vector3( 0,0,10 ),1);
+              panorama13.link( panorama12, new THREE.Vector3( 0,0,10 ),1);
+              panorama14.link( panorama13, new THREE.Vector3( 0,0,10 ),1);
+              panorama15.link( panorama14, new THREE.Vector3( 0,0,10 ),1);
+              panorama16.link( panorama15, new THREE.Vector3( -10,0,0 ),1);
+              panorama17.link( panorama16, new THREE.Vector3( -10,0,0 ),1);
+              panorama18.link( panorama17, new THREE.Vector3( -10,0,0 ),1);
+            panorama19.link( panorama18, new THREE.Vector3( -10,0,0 ),1);
+            panorama20.link( panorama19, new THREE.Vector3( -10,0,0 ),1);
+            panorama21.link( panorama20, new THREE.Vector3( -10,0,0 ),1);
+            panorama22.link( panorama21, new THREE.Vector3( -10,0,0 ),1);
+            panorama23.link( panorama22, new THREE.Vector3( -10,0,0 ),1);
+            panorama24.link( panorama23, new THREE.Vector3( -10,0,0 ),1);
+            panorama25.link( panorama24, new THREE.Vector3( 0,0,-10 ),1);
+              text = this.url;
+              var panorama = window['panorama'+text.substr(24,text.length-28)];
+              //chose start point
+
+                  viewer.add( panorama );
+                //viewer.add( panorama1);
+                viewer.add( panorama2 );
+                viewer.add( panorama3 );
+                viewer.add( panorama4 );
+                viewer.add( panorama5 );
+                viewer.add( panorama6 );
+                viewer.add( panorama7 );
+                viewer.add( panorama8 );
+                viewer.add( panorama9 );
+                viewer.add( panorama10 );
+                viewer.add( panorama11 );
+                viewer.add( panorama12 );
+                viewer.add( panorama13 );
+                viewer.add( panorama14 );
+                viewer.add( panorama15 );
+                viewer.add( panorama16 );
+                viewer.add( panorama17 );
+                viewer.add( panorama18 );
+                viewer.add( panorama19 );
+                viewer.add( panorama20 );
+                viewer.add( panorama21 );
+                viewer.add( panorama22 );
+                viewer.add( panorama23 );
+                viewer.add( panorama24 );
+                viewer.add( panorama25 );
+
+
+
+            text = this.url;
+            var panorama = window['panorama'+text.substr(24,text.length-28)];
+            viewer.setPanorama( panorama );
+
+
+              function disposePanorama () {
+
+                panorama.dispose();
+                viewer.remove( panorama );
+
+                panorama = null;
+              viewer.dispose();}
+
+              closeButton.addEventListener( 'click', function () {
+
+                disposePanorama();
+
+                progressBar.style.width = 0;
+                progressBar.style.opacity = 1;
+
+                panoramaContainer.classList.remove( 'open' );
+                Dispose();
+              }, false );
+
+            } else if ( this.type === 'video' ) {
+
+              panorama = new PANOLENS.VideoPanorama( this.url, { autoplay: true } );
+
+            } else {
+
+              return;
+
+            }
+
+            panorama.addEventListener( 'progress', function ( event ) {
+
+              progress = event.progress.loaded / event.progress.total * 100;
+
+              progressBar.style.width = progress + '%';
+
+              if ( progress === 100 ) {
+
+                progressBar.style.opacity = 0;
+
+              }
+
+            } );
+            viewer.add( panorama );
+
+            panoramaContainer.classList.add( 'open' );
+
+          }, false );
+
+          galleryContainer.appendChild( photo );
+
+        }
+
+      }
+
+      function setupPanolens () {
+
+        viewer = new PANOLENS.Viewer( { container: mainContainer } );
+
+      }
+
+      function disposePanorama () {
+
+        panorama.dispose();
+        viewer.remove();
+        panorama = null;
+      }
+
+      function init () {
+
+        // Build up gallery
+        buildGallery();
+
+        // Setup panolens
+        setupPanolens();
+
+        // Dispose panorama when close
+        closeButton.addEventListener( 'click', function () {
+
+          disposePanorama();
+
+          progressBar.style.width = 0;
+          progressBar.style.opacity = 1;
+
+          panoramaContainer.classList.remove( 'open' );
+
+        }, false );
+
+      }
+
+      init();
+
+    </script>
+
+  </body>
+</html>
