@@ -16,7 +16,9 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+      integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+      crossorigin=""/>
     <style>
       html, body {
         margin: 0;
@@ -25,8 +27,17 @@
         font-family: 'Roboto', sans-serif;
         background-color: #eee;
       }
-
+      h{
+        color:white;
+      }
+      .leaflet-container {
+        height: 400px;
+        width: 600px;
+        max-width: 100%;
+        max-height: 100%;
+      }
       a:link, a:visited{
+
         color: #bdc3c7;
       }
 
@@ -121,16 +132,38 @@
         align-self: center;
         background-color: #000;
       }
+      #map {
+        width: 77%;
+        height: 100%;
+        align: right;
+      float:right;
+    }
+    #minimap {
+      width: 20%;
+      height: 30%;
+      position: absolute;
+      bottom: 10%;
+      left: 1%;
+  }
+    #Pcontainer{
+
+    }
     </style>
   </head>
 
   <body>
     <div class="sidebar-navigation hidde-sm hidden-xs">
         <div class="logo">
-          <a href="../../index.html"><em>Harlem</em>Meer<em><br>June 17, 2022</em></a>
+          <a href="../../index.html"><em>Harlem</em>Meer<em><br></em></a>
+          <h>June 17, 2022</h>
+
+
         </div>
         <nav>
             <ul>
+                <li>
+
+                </li>
             </ul>
         </nav>
         <ul class="social-icons">
@@ -140,246 +173,136 @@
             <li><a href="#"><i class="fa fa-rss"></i></a></li>
             <li><a href="#"><i class="fa fa-behance"></i></a></li>
         </ul>
-    </div>
-
-    <div id="gallery-container">
-
 
     </div>
-
-
-
-
-
-    <div id="panorama-container">
-
-      <!-- Progress bar -->
-      <div id="progress-bar"></div>
-
-      <!-- Close button -->
-      <div class="close">
-        <i class="material-icons">close</i>
-      </div>
-
-      <!-- Main container -->
-      <div id="main-container">
-
-      </div>
-    </div>
-
     <script src="../../js/three.min.js"></script>
     <script src="../../js/panolens.min.js"></script>
     <script src="../../js/psw.js"></script>
 
-    <script>
+      <div id="map" >
+        <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+           integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+           crossorigin="">
+           var map = L.map('map').setView([51.505, -0.09], 13);
+        </script>
+        <script>
+
+        	var map = L.map('map').setView([40.7969735, -73.953887], 18);
+        	var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        		maxZoom: 19,
+        		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        	}).addTo(map);
+
+          var marker1 = L.marker([+40.7957568865119,-73.9547273748744]).on('click', onClick1).addTo(map);
+          function onClick1(e) {
+          document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+          map.setView([+40.7957568865119,-73.9547273748744], 18);
+          setTimeout(function(){map.invalidateSize()}, 600);
+          viewer.setPanorama( panorama8);}
+          var marker2 = L.marker([+40.7958624749608,-73.9546630018594]).on('click', onClick2).addTo(map);
+          function onClick2(e) {
+          document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+          map.setView([+40.7958624749608,-73.9546630018594], 18);
+          setTimeout(function(){map.invalidateSize()}, 600);
+          viewer.setPanorama( panorama7);}
+          var marker3 = L.marker([+40.7959355745578,-73.9544940226951]).on('click', onClick3).addTo(map);
+          function onClick3(e) {
+          document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+          map.setView([+40.7959355745578,-73.9544940226951], 18);
+          setTimeout(function(){map.invalidateSize()}, 600);
+          viewer.setPanorama( panorama6);}
+          var marker4 = L.marker([+40.7960046129922,-73.9543384545756]).on('click', onClick4).addTo(map);
+          function onClick4(e) {
+          document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+          map.setView([+40.7960046129922,-73.9543384545756], 18);
+          setTimeout(function(){map.invalidateSize()}, 600);
+          viewer.setPanorama( panorama5);}
+          var marker5 = L.marker([+40.7960695902767,-73.9541667932024]).on('click', onClick5).addTo(map);
+          function onClick5(e) {
+          document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+          map.setView([+40.7960695902767,-73.9541667932024], 18);
+          setTimeout(function(){map.invalidateSize()}, 600);
+          viewer.setPanorama( panorama4);}
+          var marker6 = L.marker([+40.7961386285717,-73.9540595048441]).on('click', onClick6).addTo(map);
+          function onClick6(e) {
+          document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+          map.setView([+40.7961386285717,-73.9540595048441], 18);
+          setTimeout(function(){map.invalidateSize()}, 600);
+          viewer.setPanorama( panorama3);}
+          var marker7 = L.marker([+40.7961751782282,-73.9539253943963]).on('click', onClick7).addTo(map);
+          function onClick7(e) {
+          document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+          map.setView([+40.7961751782282,-73.9539253943963], 18);
+          setTimeout(function(){map.invalidateSize()}, 600);
+          viewer.setPanorama( panorama2);}
+          var marker8 = L.marker([+40.7962442164135,-73.9537430041872]).on('click', onClick8).addTo(map);
+          function onClick8(e) {
+          document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+          map.setView([+40.7962442164135,-73.9537430041872], 18);
+          setTimeout(function(){map.invalidateSize()}, 600);
+          viewer.setPanorama( panorama1);}
+
+
+
+
+
+        </script>
+      </div>
+
+      <div id="Pcontainer">
+
+
+        <script>
+
+        const panorama1 = new PANOLENS.ImagePanorama( "images/06172022-panorama1.JPG" );
+       const panorama2 = new PANOLENS.ImagePanorama( "images/06172022-panorama2.JPG" );
+       const panorama3 = new PANOLENS.ImagePanorama( "images/06172022-panorama3.JPG" );
+       const panorama4 = new PANOLENS.ImagePanorama( "images/06172022-panorama4.JPG" );
+       const panorama5 = new PANOLENS.ImagePanorama( "images/06172022-panorama5.JPG" );
+       const panorama6 = new PANOLENS.ImagePanorama( "images/06172022-panorama6.JPG" );
+       const panorama7 = new PANOLENS.ImagePanorama( "images/06172022-panorama7.JPG" );
+       const panorama8 = new PANOLENS.ImagePanorama( "images/06172022-panorama8.JPG" );
+
+       const viewer = new PANOLENS.Viewer( );
+
+        //chose start point
+
+          viewer.add( panorama1 );
+          viewer.add( panorama1);
+          viewer.add( panorama2 );
+          viewer.add( panorama3 );
+          viewer.add( panorama4 );
+          viewer.add( panorama5 );
+          viewer.add( panorama6 );
+          viewer.add( panorama7 );
+          viewer.add( panorama8 );
+          //viewer.setPanorama( panorama8 );
+
+
+
 
-      var gallery, galleryContainer, photo, desc, panoramaContainer, mainContainer, closeButton, animationEndEvents, viewer, panorama, progress, path, format, url;
+        // Pair (back,height,left)
+       panorama1.link( panorama2, new THREE.Vector3( -10,0,0 ),1);
+       panorama2.link( panorama3, new THREE.Vector3( -10,0,0 ),1);
+       panorama3.link( panorama4, new THREE.Vector3( -10,0,0 ),1);
+       panorama4.link( panorama5, new THREE.Vector3( -10,0,0 ),1);
+       panorama5.link( panorama6, new THREE.Vector3( -10,0,0 ),1);
+       panorama6.link( panorama7, new THREE.Vector3( -10,0,0 ),1);
+       panorama7.link( panorama8, new THREE.Vector3( -10,0,0 ),1);
 
-      gallery = [ '1', '2', '3', '4', 'leaf', 'lookout', 'pier', 'rock', 'suite', 'tent' ];
-      path = 'asset/textures/equirectangular/';
-      format = '.jpg';
+       panorama2.link( panorama1, new THREE.Vector3( 10,0,0 ),1);
+       panorama3.link( panorama2, new THREE.Vector3( 10,0,0 ),1);
+       panorama4.link( panorama3, new THREE.Vector3( 10,0,0 ),1);
+       panorama5.link( panorama4, new THREE.Vector3( 10,0,0 ),1);
+       panorama6.link( panorama5, new THREE.Vector3( 10,0,0 ),1);
+       panorama7.link( panorama6, new THREE.Vector3( 10,0,0 ),1);
+       panorama8.link( panorama7, new THREE.Vector3( 10,0,0 ),1);
 
-      urls = [
-        "images/06172022-panorama1.JPG",
-       "images/06172022-panorama2.JPG",
-       "images/06172022-panorama3.JPG",
-       "images/06172022-panorama4.JPG",
-       "images/06172022-panorama5.JPG",
-       "images/06172022-panorama6.JPG",
-       "images/06172022-panorama7.JPG",
-       "images/06172022-panorama8.JPG",
 
+        </script>
 
+      </div>
 
-      ];
-
-      galleryContainer = document.getElementById( 'gallery-container' );
-      panoramaContainer = document.getElementById( 'panorama-container' );
-      mainContainer = document.getElementById( 'main-container' );
-      progressBar = document.getElementById( 'progress-bar' );
-      closeButton = panoramaContainer.querySelector( '.close' );
-
-      function buildGallery () {
-
-        for ( i = 0; i < urls.length; i++ ) {
-
-          url = urls[i];
-
-          photo = document.createElement( 'div' );
-          photo.style.backgroundImage = 'url(' + url + ')';
-          photo.classList.add( 'photo' );
-
-          if ( this.url.indexOf("1941-battle.jpg") !== -1 ) {
-
-            photo.url = "asset/textures/video/1941-battle-low.mp4";
-            photo.type = 'video';
-
-          } else if ( this.url.indexOf("panorama_video.jpg") !== -1 ) {
-
-            photo.url = "asset/textures/video/ClashofClans.mp4";
-            photo.type = 'video';
-
-          } else {
-
-            photo.url = url;
-            photo.type = 'image';
-
-          }
-
-
-          photo.addEventListener( 'click', function () {
-
-            // Keep one panorama
-            if ( panorama ) { return;}
-
-            // Dynamically generate panorama
-            if ( this.type === 'image' ) {
-
-
-
-              //panorama1"images/06102022-panorama1.JPG",
-              panorama1 = new PANOLENS.ImagePanorama( "images/06172022-panorama1.JPG" );
-             panorama2 = new PANOLENS.ImagePanorama( "images/06172022-panorama2.JPG" );
-             panorama3 = new PANOLENS.ImagePanorama( "images/06172022-panorama3.JPG" );
-             panorama4 = new PANOLENS.ImagePanorama( "images/06172022-panorama4.JPG" );
-             panorama5 = new PANOLENS.ImagePanorama( "images/06172022-panorama5.JPG" );
-             panorama6 = new PANOLENS.ImagePanorama( "images/06172022-panorama6.JPG" );
-             panorama7 = new PANOLENS.ImagePanorama( "images/06172022-panorama7.JPG" );
-             panorama8 = new PANOLENS.ImagePanorama( "images/06172022-panorama8.JPG" );
-
-
-             // Pair (back,height,left)
-             panorama1.link( panorama2, new THREE.Vector3( -10,0,0 ),1);
-             panorama2.link( panorama3, new THREE.Vector3( -10,0,0 ),1);
-             panorama3.link( panorama4, new THREE.Vector3( -10,0,0 ),1);
-             panorama4.link( panorama5, new THREE.Vector3( -10,0,0 ),1);
-             panorama5.link( panorama6, new THREE.Vector3( -10,0,0 ),1);
-             panorama6.link( panorama7, new THREE.Vector3( -10,0,0 ),1);
-             panorama7.link( panorama8, new THREE.Vector3( -10,0,0 ),1);
-
-             panorama2.link( panorama1, new THREE.Vector3( 10,0,0 ),1);
-             panorama3.link( panorama2, new THREE.Vector3( 10,0,0 ),1);
-             panorama4.link( panorama3, new THREE.Vector3( 10,0,0 ),1);
-             panorama5.link( panorama4, new THREE.Vector3( 10,0,0 ),1);
-             panorama6.link( panorama5, new THREE.Vector3( 10,0,0 ),1);
-             panorama7.link( panorama6, new THREE.Vector3( 10,0,0 ),1);
-             panorama8.link( panorama7, new THREE.Vector3( 10,0,0 ),1);
-
-
-              text = this.url;
-              var panorama = window['panorama'+text.substr(24,text.length-28)];
-              //chose start point
-
-                  viewer.add( panorama );
-                //viewer.add( panorama1);
-                viewer.add( panorama2 );
-                viewer.add( panorama3 );
-                viewer.add( panorama4 );
-                viewer.add( panorama5 );
-                viewer.add( panorama6 );
-                viewer.add( panorama7 );
-                viewer.add( panorama8 );
-
-
-
-
-            text = this.url;
-            var panorama = window['panorama'+text.substr(24,text.length-28)];
-            viewer.setPanorama( panorama );
-
-
-              function disposePanorama () {
-
-                panorama.dispose();
-                viewer.remove( panorama );
-
-                panorama = null;
-              viewer.dispose();}
-
-              closeButton.addEventListener( 'click', function () {
-
-                disposePanorama();
-
-                progressBar.style.width = 0;
-                progressBar.style.opacity = 1;
-
-                panoramaContainer.classList.remove( 'open' );
-                Dispose();
-              }, false );
-
-            } else if ( this.type === 'video' ) {
-
-              panorama = new PANOLENS.VideoPanorama( this.url, { autoplay: true } );
-
-            } else {
-
-              return;
-
-            }
-
-            panorama.addEventListener( 'progress', function ( event ) {
-
-              progress = event.progress.loaded / event.progress.total * 100;
-
-              progressBar.style.width = progress + '%';
-
-              if ( progress === 100 ) {
-
-                progressBar.style.opacity = 0;
-
-              }
-
-            } );
-            viewer.add( panorama );
-
-            panoramaContainer.classList.add( 'open' );
-
-          }, false );
-
-          galleryContainer.appendChild( photo );
-
-        }
-
-      }
-
-      function setupPanolens () {
-
-        viewer = new PANOLENS.Viewer( { container: mainContainer } );
-
-      }
-
-      function disposePanorama () {
-
-        panorama.dispose();
-        viewer.remove();
-        panorama = null;
-      }
-
-      function init () {
-
-        // Build up gallery
-        buildGallery();
-
-        // Setup panolens
-        setupPanolens();
-
-        // Dispose panorama when close
-        closeButton.addEventListener( 'click', function () {
-
-          disposePanorama();
-
-          progressBar.style.width = 0;
-          progressBar.style.opacity = 1;
-
-          panoramaContainer.classList.remove( 'open' );
-
-        }, false );
-
-      }
-
-      init();
-
-    </script>
 
   </body>
 </html>
