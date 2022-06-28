@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, shrink-to-fit=no">
+    <title>St.Luke's School Rooftop Date:June 21,2022</title>
+    <style>
+      html, body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: #000;
+      }
+
+      a:link, a:visited{
+        color: #bdc3c7;
+      }
+
+      .credit{
+        position: absolute;
+        text-align: left;
+        width: 100%;
+        padding: 10px 0;
+        color: #fff;
+        background-color: black;
+        opacity: 0.5;
+      }
+
+    </style>
+  </head>
+
+  <body>
+
+    <div class="credit">Harlem Meer Project Date: June 21,2022</a></div>
+  <script src="../../js/psw.js"></script>
+    <script src="../../js/three.min.js"></script>
+    <script src="../../js/panolens.min.js"></script>
+
+    <script>
+
+
+    const panorama1 = new PANOLENS.ImagePanorama( "images/06212022-panoramaR1.JPG" );
+   const panorama2 = new PANOLENS.ImagePanorama( "images/06212022-panoramaR2.JPG" );
+   const panorama3 = new PANOLENS.ImagePanorama( "images/06212022-panoramaR3.JPG" );
+   const panorama4 = new PANOLENS.ImagePanorama( "images/06212022-panoramaR4.JPG" );
+   const panorama5 = new PANOLENS.ImagePanorama( "images/06212022-panoramaR5.JPG" );
+   const panorama6 = new PANOLENS.ImagePanorama( "images/06212022-panoramaR6.JPG" );
+   const panorama7 = new PANOLENS.ImagePanorama( "images/06212022-panoramaR7.JPG" );
+   const panorama8 = new PANOLENS.ImagePanorama( "images/06212022-panoramaR8.JPG" );
+   const panorama9 = new PANOLENS.ImagePanorama( "images/06212022-panoramaR9.JPG" );
+   const panorama10 = new PANOLENS.ImagePanorama( "images/06212022-panoramaR10.JPG" );
+   const panorama11 = new PANOLENS.ImagePanorama( "images/06212022-panoramaC1.JPG" );
+   const panorama12 = new PANOLENS.ImagePanorama( "images/06212022-panoramaC2.JPG" );
+   const panorama13 = new PANOLENS.ImagePanorama( "images/06212022-panoramaC3.JPG" );
+   const panorama14 = new PANOLENS.ImagePanorama( "images/06212022-panoramaC4.JPG" );
+   const panorama15 = new PANOLENS.ImagePanorama( "images/06212022-panoramaC5.JPG" );
+   const panorama16 = new PANOLENS.ImagePanorama( "images/06212022-panoramaC6.JPG" );
+   const panorama17 = new PANOLENS.ImagePanorama( "images/06212022-panoramaT1.JPG" );
+   const panorama18 = new PANOLENS.ImagePanorama( "images/06212022-panoramaT2.JPG" );
+   const panorama19 = new PANOLENS.ImagePanorama( "images/06212022-panoramaT3.JPG" );
+   const panorama20 = new PANOLENS.ImagePanorama( "images/06212022-panoramaT4.JPG" );
+   const panorama21 = new PANOLENS.ImagePanorama( "images/06212022-panoramaT5.JPG" );
+
+   const viewer = new PANOLENS.Viewer( );
+
+    //chose start point
+
+
+    viewer.add( panorama19);
+  viewer.add( panorama1);
+  viewer.add( panorama2 );
+  viewer.add( panorama3 );
+  viewer.add( panorama4 );
+  viewer.add( panorama5 );
+  viewer.add( panorama6 );
+  viewer.add( panorama7 );
+  viewer.add( panorama8 );
+  viewer.add( panorama9 );
+  viewer.add( panorama10 );
+  viewer.add( panorama11 );
+  viewer.add( panorama12 );
+  viewer.add( panorama13 );
+  viewer.add( panorama14 );
+  viewer.add( panorama15 );
+  viewer.add( panorama16 );
+  viewer.add( panorama17 );
+  viewer.add( panorama18 );
+  viewer.add( panorama19 );
+  viewer.add( panorama20 );
+  viewer.add( panorama21 );
+
+    // Pair (back,height,left)
+
+
+
+   panorama1.link( panorama2, new THREE.Vector3( -10,0,0 ),1);
+   panorama2.link( panorama3, new THREE.Vector3( -10,0,0 ),1);
+   panorama3.link( panorama4, new THREE.Vector3( 0,0,10 ),1);
+   panorama4.link( panorama5, new THREE.Vector3( 0,0,10 ),1);
+   panorama5.link( panorama6, new THREE.Vector3( 10,0,0 ),1);
+   panorama6.link( panorama7, new THREE.Vector3( 0,0,-10 ),1);
+   panorama7.link( panorama8, new THREE.Vector3( 10,0,0 ),1);
+   panorama8.link( panorama9, new THREE.Vector3( -10,0,-10 ),1);
+   panorama9.link( panorama10, new THREE.Vector3( -10,0,0 ),1);
+   panorama10.link( panorama1, new THREE.Vector3( -10,0,0 ),1);
+
+   panorama2.link( panorama1, new THREE.Vector3( 10,0,0 ),1);
+   panorama3.link( panorama2, new THREE.Vector3( 10,0,0 ),1);
+   panorama4.link( panorama3, new THREE.Vector3( 10,0,0 ),1);
+   panorama5.link( panorama4, new THREE.Vector3( -10,0,0 ),1);
+   panorama6.link( panorama5, new THREE.Vector3( -10,0,10 ),1);
+   panorama7.link( panorama6, new THREE.Vector3( -10,0,0 ),1);
+   panorama8.link( panorama7, new THREE.Vector3( -10,0,0 ),1);
+   panorama9.link( panorama8, new THREE.Vector3( 10,0,10 ),1);
+   panorama10.link( panorama9, new THREE.Vector3( 10,0,0 ),1);
+   panorama1.link( panorama10, new THREE.Vector3( 10,0,0 ),1);
+
+   panorama11.link( panorama13, new THREE.Vector3( -10,0,0 ),1);
+   panorama13.link( panorama12, new THREE.Vector3( 0,0,10 ),1);
+   panorama13.link( panorama14, new THREE.Vector3( 0,0,-10 ),1);
+   panorama13.link( panorama15, new THREE.Vector3( -10,0,0 ),1);
+   panorama15.link( panorama16, new THREE.Vector3( -10,0,0 ),1);
+
+   panorama13.link( panorama11, new THREE.Vector3( 10,0,0 ),1);
+  panorama12.link( panorama13, new THREE.Vector3( 0,0,-10 ),1);
+  panorama14.link( panorama13, new THREE.Vector3( 0,0,10 ),1);
+  panorama15.link( panorama13, new THREE.Vector3( 10,0,0 ),1);
+  panorama16.link( panorama15, new THREE.Vector3( 10,0,0 ),1);
+
+  panorama17.link( panorama18, new THREE.Vector3( 0,0,-10 ),1);
+  panorama17.link( panorama20, new THREE.Vector3( -10,0,0 ),1);
+  panorama20.link( panorama19, new THREE.Vector3( -10,0,0 ),1);
+  panorama20.link( panorama21, new THREE.Vector3( 0,0,10 ),1);
+  panorama21.link( panorama19, new THREE.Vector3( -10,0,10 ),1);
+
+  panorama18.link( panorama17, new THREE.Vector3( 0,0,10 ),1);
+  panorama20.link( panorama17, new THREE.Vector3( 10,0,0 ),1);
+  panorama19.link( panorama20, new THREE.Vector3( 0,0,-10 ),1);
+  panorama21.link( panorama20, new THREE.Vector3( 0,0,-10 ),1);
+  panorama19.link( panorama21, new THREE.Vector3( -10,0,-10 ),1);
+
+    </script>
+  </body>
+</html>
