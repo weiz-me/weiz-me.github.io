@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, shrink-to-fit=no">
+    <title>SLS - June 28, 2022</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../../css/fontAwesome.css">
+    <link rel="stylesheet" href="../../css/light-box.css">
+    <link rel="stylesheet" href="../../css/owl-carousel.css">
+    <link rel="stylesheet" href="../../css/templatemo-style.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+      integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+      crossorigin=""/>
+    <style>
+      html, body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        font-family: 'Roboto', sans-serif;
+        background-color: #eee;
+      }
+      h{
+        color:white;
+      }
+      .leaflet-container {
+        height: 400px;
+        width: 600px;
+        max-width: 100%;
+        max-height: 100%;
+      }
+      a:link, a:visited{
+        color: #bdc3c7;
+      }
+
+      .credit{
+        position: relative;
+        text-align: center;
+        width: 100%;
+        padding:  0;
+        color: #fff;
+        background-color: black;
+        opacity: 0.9;
+      }
+
+      #gallery-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 4px;
+        padding-left: 23%
+      }
+
+      .title {
+        width: 100%;
+        height: 80px;
+        line-height: 80px;
+        text-align: center;
+        font-size: 24px;
+        color: #fff;
+        background-color: black;
+        opacity: .9;
+
+      }
+
+      #panorama-container {
+        position: fixed;
+        display: flex;
+        width: 100%;
+        padding-left: 25%;
+        height: 100%;
+        top: 0;
+        background: rgba(0,0,0,0.9);
+        transform: scale(0,0);
+        opacity: 0;
+        -webkit-transition: all 0.5s ease-out;
+        transition: all 0.5s ease-out;
+      }
+
+      #panorama-container.open {
+        opacity: 1;
+        transform: scale(1,1);
+      }
+
+      .photo {
+        flex-grow: 1;
+        width: 360px;
+        height: 240px;
+        background-size: cover;
+        margin: 4px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+      }
+
+      .photo:hover {
+        border-color: #000;
+      }
+
+      #progress-bar {
+        position: fixed;
+        top: 0;
+        width: 0;
+        height: 5px;
+        background-color: #fff;
+        transition: opacity 0.5s ease;
+      }
+
+      .close {
+        width: 44px;
+        height: 44px;
+        position: absolute;
+        right: 0;
+        margin: 20px;
+        cursor: pointer;
+      }
+
+      .close > i {
+        color: #fff;
+        font-size: 44px;
+      }
+
+      #main-container {
+        width: 100%;
+        height: 80%;
+        align-self: center;
+        background-color: #000;
+      }
+      #map {
+        width: 77%;
+        height: 100%;
+        align: right;
+      float:right;
+    }
+    #minimap {
+      width: 20%;
+      height: 30%;
+      position: absolute;
+      bottom: 10%;
+      left: 1%;
+  }
+    #Pcontainer{
+
+    }
+    </style>
+  </head>
+
+  <body>
+    <div class="sidebar-navigation hidde-sm hidden-xs">
+        <div class="logo">
+          <a href="../../index.html"><em>Sacred</em>Heart<em><br></em></a>
+          <h>June 28, 2022</h>
+          <h5 style="color:white;">Rooftop <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png" width="20" height="30">
+          <br></h5>
+          <h5 style="color:white;">Convent Rooftop <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png" width="20" height="30">
+          <br></h5>
+          <h5 style="color:white;">3rd floor <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png" width="20" height="30">
+          <br></h5>
+          <h5 style="color:white;">gym <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png" width="20" height="30">
+          <br></h5>
+        </div>
+        <nav>
+            <ul>
+                <li>
+
+                </li>
+            </ul>
+        </nav>
+        <ul class="social-icons">
+            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+            <li><a href="#"><i class="fa fa-rss"></i></a></li>
+            <li><a href="#"><i class="fa fa-behance"></i></a></li>
+        </ul>
+
+    </div>
+    <script src="../../js/three.min.js"></script>
+    <script src="../../js/panolens.min.js"></script>
+    <script src="../../js/psw.js"></script>
+
+      <div id="map" >
+        <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+           integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+           crossorigin="">
+        </script>
+        <script>
+
+        var map = L.map('map',{zoomSnap: 0.25}).setView([40.73248,-74.00734], 20);
+
+        var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxNativeZoom:19,
+          maxZoom: 25,
+          attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+        var greenIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+var redIcon = new L.Icon({
+iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+iconSize: [25, 41],
+iconAnchor: [12, 41],
+popupAnchor: [1, -34],
+shadowSize: [41, 41]
+});
+var yellowIcon = new L.Icon({
+iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png',
+shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+iconSize: [25, 41],
+iconAnchor: [12, 41],
+popupAnchor: [1, -34],
+shadowSize: [41, 41]
+});
+
+var marker2 = L.marker([40.732519,-74.007468],{icon: yellowIcon}).on('click', onClick2).addTo(map);
+function onClick2(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.732519,-74.007468], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama2);}
+var marker3 = L.marker([40.732405,-74.007428],{icon: yellowIcon}).on('click', onClick3).addTo(map);
+function onClick3(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.732405,-74.007428], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama3);}
+var marker4 = L.marker([40.732459,-74.007495],{icon: yellowIcon}).on('click', onClick4).addTo(map);
+function onClick4(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.732459,-74.007495], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama4);}
+var marker5 = L.marker([40.732451,-74.007549],{icon: yellowIcon}).on('click', onClick5).addTo(map);
+function onClick5(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.732451,-74.007549], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama5);}
+var marker6 = L.marker([40.732464,-74.007577],{icon: yellowIcon}).on('click', onClick6).addTo(map);
+function onClick6(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.732464,-74.007577], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama6);}
+var marker7 = L.marker([40.73228,-74.007556]).on('click', onClick7).addTo(map);
+function onClick7(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.73228,-74.007556], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama7);}
+var marker8 = L.marker([40.732246,-74.007488]).on('click', onClick8).addTo(map);
+function onClick8(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.732246,-74.007488], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama8);}
+var marker9 = L.marker([40.732398,-74.007466],{icon: yellowIcon}).on('click', onClick9).addTo(map);
+function onClick9(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.732398,-74.007466], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama9);}
+var marker10 = L.marker([40.732214,-74.007382]).on('click', onClick10).addTo(map);
+function onClick10(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.732214,-74.007382], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama10);}
+var marker11 = L.marker([40.73226,-74.007487]).on('click', onClick11).addTo(map);
+function onClick11(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.73226,-74.007487], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama11);}
+var marker12 = L.marker([40.732291,-74.007627]).on('click', onClick12).addTo(map);
+function onClick12(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.732291,-74.007627], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama12);}
+var marker13 = L.marker([40.732179,-74.007683]).on('click', onClick13).addTo(map);
+function onClick13(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.732179,-74.007683], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama13);}
+var marker14 = L.marker([40.73231,-74.00756],{icon: greenIcon}).on('click', onClick14).addTo(map);
+function onClick14(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.73231,-74.00756], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama14);}
+var marker15 = L.marker([40.732844,-74.007238],{icon: redIcon}).on('click', onClick15).addTo(map);
+function onClick15(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.732844,-74.007238], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama15);}
+var marker16 = L.marker([40.732785,-74.007316],{icon: redIcon}).on('click', onClick16).addTo(map);
+function onClick16(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.732785,-74.007316], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama16);}
+var marker17 = L.marker([40.732694,-74.007307],{icon: redIcon}).on('click', onClick17).addTo(map);
+function onClick17(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.732694,-74.007307], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama17);}
+var marker18 = L.marker([40.732478,-74.007492],{icon: redIcon}).on('click', onClick18).addTo(map);
+function onClick18(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.732478,-74.007492], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama18);}
+var marker19 = L.marker([40.732592,-74.007377],{icon: redIcon}).on('click', onClick19).addTo(map);
+function onClick19(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.732592,-74.007377], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama19);}
+var marker20 = L.marker([40.732695,-74.007292],{icon: redIcon}).on('click', onClick20).addTo(map);
+function onClick20(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.732695,-74.007292], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama20);}
+var marker21 = L.marker([40.732376,-74.007615],{icon: redIcon}).on('click', onClick21).addTo(map);
+function onClick21(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.732376,-74.007615], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama21);}
+var marker22 = L.marker([40.732387,-74.007612],{icon: redIcon}).on('click', onClick22).addTo(map);
+function onClick22(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.732387,-74.007612], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama22);}
+var marker23 = L.marker([40.732591,-74.007491],{icon: redIcon}).on('click', onClick23).addTo(map);
+function onClick23(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.732591,-74.007491], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama23);}
+var marker24 = L.marker([40.732509,-74.007554],{icon: redIcon}).on('click', onClick24).addTo(map);
+function onClick24(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.732509,-74.007554], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama24);}
+var marker25 = L.marker([40.732441,-74.007555],{icon: redIcon}).on('click', onClick25).addTo(map);
+function onClick25(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.732441,-74.007555], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama25);}
+var marker26 = L.marker([40.732211,-74.007618],{icon: greenIcon}).on('click', onClick26).addTo(map);
+function onClick26(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.732211,-74.007618], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama26);}
+var marker27 = L.marker([40.732206,-74.007658],{icon: greenIcon}).on('click', onClick27).addTo(map);
+function onClick27(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.732206,-74.007658], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama27);}
+var marker28 = L.marker([40.732203,-74.007656],{icon: greenIcon}).on('click', onClick28).addTo(map);
+function onClick28(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.732203,-74.007656], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama28);};
+
+
+
+        </script>
+      </div>
+
+      <div id="Pcontainer">
+
+
+        <script>
+
+        //const panorama1 = new PANOLENS.ImagePanorama( "images/06282022-panorama1.JPG" );
+       const panorama2 = new PANOLENS.ImagePanorama( "images/06282022-panorama2.JPG" );
+       const panorama3 = new PANOLENS.ImagePanorama( "images/06282022-panorama3.JPG" );
+       const panorama4 = new PANOLENS.ImagePanorama( "images/06282022-panorama4.JPG" );
+       const panorama5 = new PANOLENS.ImagePanorama( "images/06282022-panorama5.JPG" );
+       const panorama6 = new PANOLENS.ImagePanorama( "images/06282022-panorama6.JPG" );
+       const panorama7 = new PANOLENS.ImagePanorama( "images/06282022-panorama7.JPG" );
+       const panorama8 = new PANOLENS.ImagePanorama( "images/06282022-panorama8.JPG" );
+       const panorama9 = new PANOLENS.ImagePanorama( "images/06282022-panorama9.JPG" );
+       const panorama10 = new PANOLENS.ImagePanorama( "images/06282022-panorama10.JPG" );
+       const panorama11 = new PANOLENS.ImagePanorama( "images/06282022-panorama11.JPG" );
+       const panorama12 = new PANOLENS.ImagePanorama( "images/06282022-panorama12.JPG" );
+       const panorama13 = new PANOLENS.ImagePanorama( "images/06282022-panorama13.JPG" );
+       const panorama14 = new PANOLENS.ImagePanorama( "images/06282022-panorama14.JPG" );
+       const panorama15 = new PANOLENS.ImagePanorama( "images/06282022-panorama15.JPG" );
+       const panorama16 = new PANOLENS.ImagePanorama( "images/06282022-panorama16.JPG" );
+       const panorama17 = new PANOLENS.ImagePanorama( "images/06282022-panorama17.JPG" );
+       const panorama18 = new PANOLENS.ImagePanorama( "images/06282022-panorama18.JPG" );
+       const panorama19 = new PANOLENS.ImagePanorama( "images/06282022-panorama19.JPG" );
+       const panorama20 = new PANOLENS.ImagePanorama( "images/06282022-panorama20.JPG" );
+       const panorama21 = new PANOLENS.ImagePanorama( "images/06282022-panorama21.JPG" );
+       const panorama22 = new PANOLENS.ImagePanorama( "images/06282022-panorama22.JPG" );
+       const panorama23 = new PANOLENS.ImagePanorama( "images/06282022-panorama23.JPG" );
+       const panorama24 = new PANOLENS.ImagePanorama( "images/06282022-panorama24.JPG" );
+       const panorama25 = new PANOLENS.ImagePanorama( "images/06282022-panorama25.JPG" );
+       const panorama26 = new PANOLENS.ImagePanorama( "images/06282022-panorama26.JPG" );
+       const panorama27 = new PANOLENS.ImagePanorama( "images/06282022-panorama27.JPG" );
+       const panorama28 = new PANOLENS.ImagePanorama( "images/06282022-panorama28.JPG" );
+
+
+       const viewer = new PANOLENS.Viewer( );
+
+        //chose start point
+
+
+        viewer.add( panorama15);
+        viewer.add( panorama2 );
+        viewer.add( panorama3 );
+        viewer.add( panorama4 );
+        viewer.add( panorama5 );
+        viewer.add( panorama6 );
+        viewer.add( panorama7 );
+        viewer.add( panorama8 );
+        viewer.add( panorama9 );
+        viewer.add( panorama10 );
+        viewer.add( panorama11 );
+        viewer.add( panorama12 );
+        viewer.add( panorama13 );
+        viewer.add( panorama14 );
+        viewer.add( panorama15 );
+        viewer.add( panorama16 );
+        viewer.add( panorama17 );
+        viewer.add( panorama18 );
+        viewer.add( panorama19 );
+        viewer.add( panorama20 );
+        viewer.add( panorama21 );
+        viewer.add( panorama22 );
+        viewer.add( panorama23 );
+        viewer.add( panorama24 );
+        viewer.add( panorama25 );
+        viewer.add( panorama26 );
+        viewer.add( panorama27 );
+        viewer.add( panorama28 );
+
+        // Pair (back,height,left)
+
+
+    //gym
+       panorama6.link( panorama2, new THREE.Vector3( -10,0,0 ),1);
+       panorama2.link( panorama3, new THREE.Vector3( -10,0,0 ),1);
+       panorama3.link( panorama4, new THREE.Vector3( 0,0,-10 ),1);
+       panorama4.link( panorama9, new THREE.Vector3( 10,0,0 ),1);
+       panorama9.link( panorama5, new THREE.Vector3( 10,0,0 ),1);
+       panorama5.link( panorama6, new THREE.Vector3( 0,0,-10 ),1);
+       panorama2.link( panorama9, new THREE.Vector3( 0,0,-10 ),1);
+
+    //Convent buiding
+        panorama28.link( panorama26, new THREE.Vector3( 0,0,-10 ),1);
+        panorama28.link( panorama27, new THREE.Vector3( 0,0,10 ),1);
+        panorama28.link( panorama14, new THREE.Vector3( -10,10,10 ),1);
+        panorama14.link( panorama13, new THREE.Vector3( -10,10,0 ),1);
+
+    //Convent Rooftop
+       panorama8.link( panorama7, new THREE.Vector3( 0,0,-10 ),1);
+       panorama8.link( panorama12, new THREE.Vector3( 0,0,10 ),1);
+       panorama11.link( panorama13, new THREE.Vector3( 0,0,10 ),1);
+       panorama8.link( panorama11, new THREE.Vector3( -10,0,0 ),1);
+       panorama11.link( panorama10, new THREE.Vector3( -10,0,0 ),1);
+
+       //main Rooftop
+
+       panorama15.link( panorama16, new THREE.Vector3( -10,0,-10 ),1);
+      panorama16.link( panorama17, new THREE.Vector3( -10,0,0 ),1);
+      panorama17.link( panorama23, new THREE.Vector3( -10,0,0 ),1);
+      panorama23.link( panorama24, new THREE.Vector3( -10,0,0 ),1);
+      panorama24.link( panorama25, new THREE.Vector3( -10,0,0 ),1);
+      panorama25.link( panorama21, new THREE.Vector3( -10,0,0 ),1);
+      panorama21.link( panorama22, new THREE.Vector3( 0,0,10 ),1);
+      panorama22.link( panorama18, new THREE.Vector3( 10,0,0 ),1);
+      panorama18.link( panorama19, new THREE.Vector3( 10,0,0 ),1);
+      panorama19.link( panorama20, new THREE.Vector3( 10,0,0 ),1);
+      panorama20.link( panorama15, new THREE.Vector3( 10,0,0 ),1);
+
+      //connectitio
+      panorama4.link( panorama14, new THREE.Vector3( -10,0,0 ),1);
+      panorama14.link( panorama4, new THREE.Vector3( 0,0,10 ),1);
+
+    //flip
+    panorama2.link( panorama6, new THREE.Vector3( 10,0,0 ),1);
+       panorama3.link( panorama2, new THREE.Vector2( 10,0,0 ),1);
+       panorama4.link( panorama3, new THREE.Vector3( 0,0,10 ),1);
+       panorama9.link( panorama4, new THREE.Vector3( -10,0,0 ),1);
+       panorama5.link( panorama9, new THREE.Vector3( -10,0,0 ),1);
+       panorama6.link( panorama5, new THREE.Vector3( 0,0,10 ),1);
+       panorama9.link( panorama2, new THREE.Vector3( 0,0,10 ),1);
+        panorama26.link( panorama28, new THREE.Vector3( 0,0,10 ),1);
+        panorama27.link( panorama28, new THREE.Vector3( 0,0,-10 ),1);
+        panorama14.link( panorama28, new THREE.Vector3( 10,-10,-10 ),1);
+        panorama13.link( panorama14, new THREE.Vector3( 10,-10,0 ),1);
+       panorama7.link( panorama8, new THREE.Vector3( 0,0,10 ),1);
+       panorama12.link( panorama8, new THREE.Vector3( 0,0,-10 ),1);
+       panorama13.link( panorama11, new THREE.Vector3( 0,0,-10 ),1);
+       panorama11.link( panorama8, new THREE.Vector3( 10,0,0 ),1);
+       panorama10.link( panorama11, new THREE.Vector3( 10,0,0 ),1);
+       panorama16.link( panorama15, new THREE.Vector3( 10,0,10 ),1);
+       panorama17.link( panorama16, new THREE.Vector3( 10,0,0 ),1);
+       panorama23.link( panorama17, new THREE.Vector3( 10,0,0 ),1);
+       panorama24.link( panorama23, new THREE.Vector3( 10,0,0 ),1);
+       panorama25.link( panorama24, new THREE.Vector3( 10,0,0 ),1);
+       panorama21.link( panorama25, new THREE.Vector3( 10,0,0 ),1);
+       panorama22.link( panorama21, new THREE.Vector3( 0,0,-10 ),1);
+       panorama18.link( panorama22, new THREE.Vector3( -10,0,0 ),1);
+       panorama19.link( panorama18, new THREE.Vector3( -10,0,0 ),1);
+       panorama20.link( panorama19, new THREE.Vector3( -10,0,0 ),1);
+       panorama15.link( panorama20, new THREE.Vector3( -10,0,0 ),1);
+        </script>
+
+      </div>
+
+
+  </body>
+</html>
