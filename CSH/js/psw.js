@@ -8,5 +8,5 @@
     else
        {
       alert('Wrong Password, redirect to Home Page');
-      window.location="http://weiz.me/HMC";
+      window.location="http://weiz.me/CSH";
         }
