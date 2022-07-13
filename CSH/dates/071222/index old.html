@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, shrink-to-fit=no">
+    <title>Convent of Sacret Heart Project Date:July 12,2022</title>
+    <style>
+      html, body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: #000;
+      }
+
+      a:link, a:visited{
+        color: #bdc3c7;
+      }
+
+      .credit{
+        position: absolute;
+        text-align: left;
+        width: 100%;
+        padding: 10px 0;
+        color: #fff;
+        background-color: black;
+        opacity: 0.5;
+      }
+
+    </style>
+  </head>
+
+  <body>
+
+    <div class="credit">Harlem Meer Project Date: July 12,2022</a></div>
+  <script src="../../js/psw.js"></script>
+    <script src="../../js/three.min.js"></script>
+    <script src="../../js/panolens.min.js"></script>
+
+    <script>
+
+
+    const panorama1 = new PANOLENS.ImagePanorama( "images/07122022-panorama1.JPG" );
+   const panorama2 = new PANOLENS.ImagePanorama( "images/07122022-panorama2.JPG" );
+   const panorama3 = new PANOLENS.ImagePanorama( "images/07122022-panorama3.JPG" );
+   const panorama4 = new PANOLENS.ImagePanorama( "images/07122022-panorama4.JPG" );
+   const panorama5 = new PANOLENS.ImagePanorama( "images/07122022-panorama5.JPG" );
+   const panorama6 = new PANOLENS.ImagePanorama( "images/07122022-panorama6.JPG" );
+   const panorama7 = new PANOLENS.ImagePanorama( "images/07122022-panorama7.JPG" );
+   const panorama8 = new PANOLENS.ImagePanorama( "images/07122022-panorama8.JPG" );
+   const panorama9 = new PANOLENS.ImagePanorama( "images/07122022-panorama9.JPG" );
+   const panorama10 = new PANOLENS.ImagePanorama( "images/07122022-panorama10.JPG" );
+   const panorama11 = new PANOLENS.ImagePanorama( "images/07122022-panorama11.JPG" );
+   const panorama12 = new PANOLENS.ImagePanorama( "images/07122022-panorama12.JPG" );
+   const panorama13 = new PANOLENS.ImagePanorama( "images/07122022-panorama13.JPG" );
+   const panorama14 = new PANOLENS.ImagePanorama( "images/07122022-panorama14.JPG" );
+   const panorama15 = new PANOLENS.ImagePanorama( "images/07122022-panorama15.JPG" );
+
+
+   const viewer = new PANOLENS.Viewer( );
+
+    //chose start point
+
+
+        viewer.add( panorama1);
+        viewer.add( panorama2 );
+        viewer.add( panorama3 );
+        viewer.add( panorama4 );
+        viewer.add( panorama5 );
+        viewer.add( panorama6 );
+        viewer.add( panorama7 );
+        viewer.add( panorama8 );
+        viewer.add( panorama9 );
+        viewer.add( panorama10 );
+        viewer.add( panorama11 );
+        viewer.add( panorama12 );
+        viewer.add( panorama13 );
+        viewer.add( panorama14 );
+        viewer.add( panorama15 );
+
+
+
+
+
+    // Pair (back,height,left)
+
+
+
+    panorama1.link( panorama2, new THREE.Vector3( -10,0,0 ),1);
+     panorama2.link( panorama3, new THREE.Vector3( 0,0,-10 ),1);
+     panorama3.link( panorama4, new THREE.Vector3( -10,0,-10 ),1);
+     panorama4.link( panorama5, new THREE.Vector3( 0,0,-10 ),1);
+     panorama5.link( panorama6, new THREE.Vector3( -10,0,0 ),1);
+     panorama6.link( panorama7, new THREE.Vector3( -10,0,0 ),1);
+     panorama7.link( panorama8, new THREE.Vector3( -10,0,0 ),1);
+     panorama8.link( panorama9, new THREE.Vector3( -10,0,0 ),1);
+     panorama9.link( panorama10, new THREE.Vector3( -10,0,-10 ),1);
+     panorama10.link( panorama11, new THREE.Vector3( -10,0,0 ),1);
+     panorama11.link( panorama12, new THREE.Vector3( 0,0,10 ),1);
+     panorama12.link( panorama13, new THREE.Vector3( 0,0,10 ),1);
+     panorama13.link( panorama14, new THREE.Vector3( 0,0,10 ),1);
+     panorama8.link( panorama15, new THREE.Vector3( 0,0,-10 ),1);
+
+
+
+
+-->
+    </script>
+  </body>
+</html>
