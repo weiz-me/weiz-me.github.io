@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, shrink-to-fit=no">
+    <title>HMC - July 21, 2022</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../../css/fontAwesome.css">
+    <link rel="stylesheet" href="../../css/light-box.css">
+    <link rel="stylesheet" href="../../css/owl-carousel.css">
+    <link rel="stylesheet" href="../../css/templatemo-style.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+      integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+      crossorigin=""/>
+    <style>
+      html, body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        font-family: 'Roboto', sans-serif;
+        background-color: #eee;
+      }
+      h{
+        color:white;
+      }
+      .leaflet-container {
+        height: 400px;
+        width: 600px;
+        max-width: 100%;
+        max-height: 100%;
+      }
+      a:link, a:visited{
+        color: #bdc3c7;
+      }
+
+      .credit{
+        position: relative;
+        text-align: center;
+        width: 100%;
+        padding:  0;
+        color: #fff;
+        background-color: black;
+        opacity: 0.9;
+      }
+
+      #gallery-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 4px;
+        padding-left: 23%
+      }
+
+      .title {
+        width: 100%;
+        height: 80px;
+        line-height: 80px;
+        text-align: center;
+        font-size: 24px;
+        color: #fff;
+        background-color: black;
+        opacity: .9;
+
+      }
+
+      #panorama-container {
+        position: fixed;
+        display: flex;
+        width: 100%;
+        padding-left: 25%;
+        height: 100%;
+        top: 0;
+        background: rgba(0,0,0,0.9);
+        transform: scale(0,0);
+        opacity: 0;
+        -webkit-transition: all 0.5s ease-out;
+        transition: all 0.5s ease-out;
+      }
+
+      #panorama-container.open {
+        opacity: 1;
+        transform: scale(1,1);
+      }
+
+      .photo {
+        flex-grow: 1;
+        width: 360px;
+        height: 240px;
+        background-size: cover;
+        margin: 4px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+      }
+
+      .photo:hover {
+        border-color: #000;
+      }
+
+      #progress-bar {
+        position: fixed;
+        top: 0;
+        width: 0;
+        height: 5px;
+        background-color: #fff;
+        transition: opacity 0.5s ease;
+      }
+
+      .close {
+        width: 44px;
+        height: 44px;
+        position: absolute;
+        right: 0;
+        margin: 20px;
+        cursor: pointer;
+      }
+
+      .close > i {
+        color: #fff;
+        font-size: 44px;
+      }
+
+      #main-container {
+        width: 100%;
+        height: 80%;
+        align-self: center;
+        background-color: #000;
+      }
+      #map {
+        width: 77%;
+        height: 100%;
+        align: right;
+      float:right;
+    }
+    #minimap {
+      width: 20%;
+      height: 30%;
+      position: absolute;
+      bottom: 10%;
+      left: 1%;
+  }
+    #Pcontainer{
+
+    }
+    </style>
+  </head>
+
+  <body>
+    <div class="sidebar-navigation hidde-sm hidden-xs">
+        <div class="logo">
+          <a href="../../index.html"><em>Harlem</em>Meer<em><br></em></a>
+          <h>July 21, 2022</h>
+
+
+        </div>
+        <nav>
+            <ul>
+                <li>
+
+                </li>
+            </ul>
+        </nav>
+        <ul class="social-icons">
+            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+            <li><a href="#"><i class="fa fa-rss"></i></a></li>
+            <li><a href="#"><i class="fa fa-behance"></i></a></li>
+        </ul>
+
+    </div>
+    <script src="../../js/three.min.js"></script>
+    <script src="../../js/panolens.min.js"></script>
+    <script src="../../js/psw.js"></script>
+
+      <div id="map" >
+        <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+           integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+           crossorigin="">
+           var map = L.map('map').setView([51.505, -0.09], 13);
+        </script>
+        <script>
+
+        	var map = L.map('map').setView([40.7969735, -73.953887], 18);
+        	var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        		maxZoom: 19,
+        		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        	}).addTo(map);
+
+          var marker1 = L.marker([40.798185,-73.953563]).on('click', onClick1).addTo(map);
+function onClick1(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.798185,-73.953563], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama1);}
+var marker10 = L.marker([40.795802,-73.955267]).on('click', onClick10).addTo(map);
+function onClick10(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.795802,-73.955267], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama10);}
+var marker11 = L.marker([40.795648,-73.955444]).on('click', onClick11).addTo(map);
+function onClick11(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.795648,-73.955444], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama11);}
+var marker12 = L.marker([40.795605,-73.955282]).on('click', onClick12).addTo(map);
+function onClick12(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.795605,-73.955282], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama12);}
+var marker13 = L.marker([40.795588,-73.954995]).on('click', onClick13).addTo(map);
+function onClick13(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.795588,-73.954995], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama13);}
+var marker14 = L.marker([40.795705,-73.954806]).on('click', onClick14).addTo(map);
+function onClick14(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.795705,-73.954806], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama14);}
+var marker15 = L.marker([40.795785,-73.954664]).on('click', onClick15).addTo(map);
+function onClick15(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.795785,-73.954664], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama15);}
+var marker16 = L.marker([40.795918,-73.95442]).on('click', onClick16).addTo(map);
+function onClick16(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.795918,-73.95442], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama16);}
+var marker17 = L.marker([40.796002,-73.954149]).on('click', onClick17).addTo(map);
+function onClick17(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.796002,-73.954149], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama17);}
+var marker18 = L.marker([40.796029,-73.953928]).on('click', onClick18).addTo(map);
+function onClick18(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.796029,-73.953928], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama18);}
+var marker19 = L.marker([40.796092,-73.953878]).on('click', onClick19).addTo(map);
+function onClick19(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.796092,-73.953878], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama19);}
+var marker2 = L.marker([40.798225,-73.953799]).on('click', onClick2).addTo(map);
+function onClick2(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.798225,-73.953799], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama2);}
+var marker20 = L.marker([40.796176,-73.953913]).on('click', onClick20).addTo(map);
+function onClick20(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.796176,-73.953913], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama20);}
+var marker21 = L.marker([40.796195,-73.953955]).on('click', onClick21).addTo(map);
+function onClick21(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.796195,-73.953955], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama21);}
+var marker22 = L.marker([40.79617,-73.954094]).on('click', onClick22).addTo(map);
+function onClick22(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.79617,-73.954094], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama22);}
+var marker23 = L.marker([40.796115,-73.95404]).on('click', onClick23).addTo(map);
+function onClick23(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.796115,-73.95404], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama23);}
+var marker24 = L.marker([40.796053,-73.954218]).on('click', onClick24).addTo(map);
+function onClick24(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.796053,-73.954218], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama24);}
+var marker25 = L.marker([40.796006,-73.954356]).on('click', onClick25).addTo(map);
+function onClick25(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.796006,-73.954356], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama25);}
+var marker26 = L.marker([40.795935,-73.954517]).on('click', onClick26).addTo(map);
+function onClick26(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.795935,-73.954517], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama26);}
+var marker27 = L.marker([40.795834,-73.954727]).on('click', onClick27).addTo(map);
+function onClick27(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.795834,-73.954727], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama27);}
+var marker28 = L.marker([40.795789,-73.954761]).on('click', onClick28).addTo(map);
+function onClick28(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.795789,-73.954761], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama28);}
+var marker29 = L.marker([40.79569,-73.95493]).on('click', onClick29).addTo(map);
+function onClick29(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.79569,-73.95493], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama29);}
+var marker3 = L.marker([40.797911,-73.953772]).on('click', onClick3).addTo(map);
+function onClick3(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.797911,-73.953772], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama3);}
+var marker30 = L.marker([40.795629,-73.955029]).on('click', onClick30).addTo(map);
+function onClick30(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.795629,-73.955029], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama30);}
+var marker31 = L.marker([40.795684,-73.955208]).on('click', onClick31).addTo(map);
+function onClick31(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.795684,-73.955208], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama31);}
+var marker4 = L.marker([40.797693,-73.954124]).on('click', onClick4).addTo(map);
+function onClick4(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.797693,-73.954124], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama4);}
+var marker5 = L.marker([40.797476,-73.954322]).on('click', onClick5).addTo(map);
+function onClick5(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.797476,-73.954322], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama5);}
+var marker6 = L.marker([40.796922,-73.954381]).on('click', onClick6).addTo(map);
+function onClick6(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.796922,-73.954381], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama6);}
+var marker7 = L.marker([40.79662,-73.954511]).on('click', onClick7).addTo(map);
+function onClick7(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.79662,-73.954511], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama7);}
+var marker8 = L.marker([40.796335,-73.954838]).on('click', onClick8).addTo(map);
+function onClick8(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.796335,-73.954838], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama8);}
+var marker9 = L.marker([40.796126,-73.95509]).on('click', onClick9).addTo(map);
+function onClick9(e) {
+document.getElementById("map").style="width: 20%; height: 30%; position: absolute;  bottom: 10%; left: 1%;" ;
+map.setView([40.796126,-73.95509], 19);
+setTimeout(function(){map.invalidateSize()}, 600);
+viewer.setPanorama( panorama9);}
+
+
+
+
+
+        </script>
+      </div>
+
+      <div id="Pcontainer">
+
+
+        <script>
+
+
+        const viewer = new PANOLENS.Viewer( );
+const panorama1 = new PANOLENS.ImagePanorama( "images/07212022-panorama1.JPG" );
+viewer.add( panorama1);
+const panorama10 = new PANOLENS.ImagePanorama( "images/07212022-panorama10.JPG" );
+viewer.add( panorama10);
+const panorama11 = new PANOLENS.ImagePanorama( "images/07212022-panorama11.JPG" );
+viewer.add( panorama11);
+const panorama12 = new PANOLENS.ImagePanorama( "images/07212022-panorama12.JPG" );
+viewer.add( panorama12);
+const panorama13 = new PANOLENS.ImagePanorama( "images/07212022-panorama13.JPG" );
+viewer.add( panorama13);
+const panorama14 = new PANOLENS.ImagePanorama( "images/07212022-panorama14.JPG" );
+viewer.add( panorama14);
+const panorama15 = new PANOLENS.ImagePanorama( "images/07212022-panorama15.JPG" );
+viewer.add( panorama15);
+const panorama16 = new PANOLENS.ImagePanorama( "images/07212022-panorama16.JPG" );
+viewer.add( panorama16);
+const panorama17 = new PANOLENS.ImagePanorama( "images/07212022-panorama17.JPG" );
+viewer.add( panorama17);
+const panorama18 = new PANOLENS.ImagePanorama( "images/07212022-panorama18.JPG" );
+viewer.add( panorama18);
+const panorama19 = new PANOLENS.ImagePanorama( "images/07212022-panorama19.JPG" );
+viewer.add( panorama19);
+const panorama2 = new PANOLENS.ImagePanorama( "images/07212022-panorama2.JPG" );
+viewer.add( panorama2);
+const panorama20 = new PANOLENS.ImagePanorama( "images/07212022-panorama20.JPG" );
+viewer.add( panorama20);
+const panorama21 = new PANOLENS.ImagePanorama( "images/07212022-panorama21.JPG" );
+viewer.add( panorama21);
+const panorama22 = new PANOLENS.ImagePanorama( "images/07212022-panorama22.JPG" );
+viewer.add( panorama22);
+const panorama23 = new PANOLENS.ImagePanorama( "images/07212022-panorama23.JPG" );
+viewer.add( panorama23);
+const panorama24 = new PANOLENS.ImagePanorama( "images/07212022-panorama24.JPG" );
+viewer.add( panorama24);
+const panorama25 = new PANOLENS.ImagePanorama( "images/07212022-panorama25.JPG" );
+viewer.add( panorama25);
+const panorama26 = new PANOLENS.ImagePanorama( "images/07212022-panorama26.JPG" );
+viewer.add( panorama26);
+const panorama27 = new PANOLENS.ImagePanorama( "images/07212022-panorama27.JPG" );
+viewer.add( panorama27);
+const panorama28 = new PANOLENS.ImagePanorama( "images/07212022-panorama28.JPG" );
+viewer.add( panorama28);
+const panorama29 = new PANOLENS.ImagePanorama( "images/07212022-panorama29.JPG" );
+viewer.add( panorama29);
+const panorama3 = new PANOLENS.ImagePanorama( "images/07212022-panorama3.JPG" );
+viewer.add( panorama3);
+const panorama30 = new PANOLENS.ImagePanorama( "images/07212022-panorama30.JPG" );
+viewer.add( panorama30);
+const panorama31 = new PANOLENS.ImagePanorama( "images/07212022-panorama31.JPG" );
+viewer.add( panorama31);
+const panorama4 = new PANOLENS.ImagePanorama( "images/07212022-panorama4.JPG" );
+viewer.add( panorama4);
+const panorama5 = new PANOLENS.ImagePanorama( "images/07212022-panorama5.JPG" );
+viewer.add( panorama5);
+const panorama6 = new PANOLENS.ImagePanorama( "images/07212022-panorama6.JPG" );
+viewer.add( panorama6);
+const panorama7 = new PANOLENS.ImagePanorama( "images/07212022-panorama7.JPG" );
+viewer.add( panorama7);
+const panorama8 = new PANOLENS.ImagePanorama( "images/07212022-panorama8.JPG" );
+viewer.add( panorama8);
+const panorama9 = new PANOLENS.ImagePanorama( "images/07212022-panorama9.JPG" );
+viewer.add( panorama9);
+
+
+      panorama10.link( panorama11, new THREE.Vector3( -10,0,0 ),1);
+      panorama11.link( panorama10, new THREE.Vector3( 0,0,-10 ),1);
+      panorama31.link( panorama10, new THREE.Vector3( 0,0,-10 ),1);
+      panorama10.link( panorama31, new THREE.Vector3( -10,0,10 ),1);
+
+      panorama1.link( panorama2, new THREE.Vector3( 0,0,-10 ),1);
+      panorama1.link( panorama3, new THREE.Vector3( -10,0,0 ),1);
+      panorama2.link( panorama3, new THREE.Vector3( -10,0,10 ),1);
+      panorama3.link( panorama4, new THREE.Vector3( -10,0,0 ),1);
+      panorama4.link( panorama5, new THREE.Vector3( -10,0,0 ),1);
+      panorama5.link( panorama6, new THREE.Vector3( -10,0,0 ),1);
+      panorama6.link( panorama7, new THREE.Vector3( -10,0,0 ),1);
+      panorama7.link( panorama8, new THREE.Vector3( -10,0,0 ),1);
+      panorama8.link( panorama9, new THREE.Vector3( -10,0,0 ),1);
+      panorama9.link( panorama10, new THREE.Vector3( -10,0,0 ),1);
+      panorama11.link( panorama12, new THREE.Vector3( 10,0,0 ),1);
+      panorama12.link( panorama13, new THREE.Vector3( 10,0,0 ),1);
+      panorama13.link( panorama14, new THREE.Vector3( 10,0,0 ),1);
+      panorama14.link( panorama15, new THREE.Vector3( 10,0,0 ),1);
+      panorama15.link( panorama16, new THREE.Vector3( 10,0,0 ),1);
+      panorama16.link( panorama17, new THREE.Vector3( 10,0,0 ),1);
+      panorama17.link( panorama18, new THREE.Vector3( 10,0,0 ),1);
+      panorama18.link( panorama19, new THREE.Vector3( 0,0,-10 ),1);
+      panorama19.link( panorama20, new THREE.Vector3( 0,0,-10 ),1);
+      panorama20.link( panorama21, new THREE.Vector3( -10,0,0 ),1);
+      panorama21.link( panorama22, new THREE.Vector3( -10,0,0 ),1);
+      panorama22.link( panorama23, new THREE.Vector3( 0,0,10 ),1);
+      panorama23.link( panorama24, new THREE.Vector3( -10,0,0 ),1);
+      panorama24.link( panorama25, new THREE.Vector3( -10,0,0 ),1);
+      panorama25.link( panorama26, new THREE.Vector3( -10,0,0 ),1);
+      panorama26.link( panorama27, new THREE.Vector3( -10,0,0 ),1);
+      panorama27.link( panorama28, new THREE.Vector3( -10,0,0 ),1);
+      panorama28.link( panorama29, new THREE.Vector3( -10,0,0 ),1);
+      panorama29.link( panorama30, new THREE.Vector3( -10,0,0 ),1);
+      panorama30.link( panorama31, new THREE.Vector3( -10,0,0 ),1);
+      panorama2.link( panorama1, new THREE.Vector3( 0,0,10 ),1);
+      panorama3.link( panorama1, new THREE.Vector3( 10,0,0 ),1);
+      panorama3.link( panorama2, new THREE.Vector3( 10,0,-10 ),1);
+      panorama4.link( panorama3, new THREE.Vector3( 10,0,0 ),1);
+      panorama5.link( panorama4, new THREE.Vector3( 10,0,0 ),1);
+      panorama6.link( panorama5, new THREE.Vector3( 10,0,0 ),1);
+      panorama7.link( panorama6, new THREE.Vector3( 10,0,0 ),1);
+      panorama8.link( panorama7, new THREE.Vector3( 10,0,0 ),1);
+      panorama9.link( panorama8, new THREE.Vector3( 10,0,0 ),1);
+      panorama10.link( panorama9, new THREE.Vector3( 10,0,0 ),1);
+      panorama12.link( panorama11, new THREE.Vector3( -10,0,0 ),1);
+      panorama13.link( panorama12, new THREE.Vector3( -10,0,0 ),1);
+      panorama14.link( panorama13, new THREE.Vector3( -10,0,0 ),1);
+      panorama15.link( panorama14, new THREE.Vector3( -10,0,0 ),1);
+      panorama16.link( panorama15, new THREE.Vector3( -10,0,0 ),1);
+      panorama17.link( panorama16, new THREE.Vector3( -10,0,0 ),1);
+      panorama18.link( panorama17, new THREE.Vector3( -10,0,0 ),1);
+      panorama19.link( panorama18, new THREE.Vector3( 0,0,10 ),1);
+      panorama20.link( panorama19, new THREE.Vector3( 0,0,10 ),1);
+      panorama21.link( panorama20, new THREE.Vector3( 10,0,0 ),1);
+      panorama22.link( panorama21, new THREE.Vector3( 10,0,0 ),1);
+      panorama23.link( panorama22, new THREE.Vector3( 0,0,-10 ),1);
+      panorama24.link( panorama23, new THREE.Vector3( 10,0,0 ),1);
+      panorama25.link( panorama24, new THREE.Vector3( 10,0,0 ),1);
+      panorama26.link( panorama25, new THREE.Vector3( 10,0,0 ),1);
+      panorama27.link( panorama26, new THREE.Vector3( 10,0,0 ),1);
+      panorama28.link( panorama27, new THREE.Vector3( 10,0,0 ),1);
+      panorama29.link( panorama28, new THREE.Vector3( 10,0,0 ),1);
+      panorama30.link( panorama29, new THREE.Vector3( 10,0,0 ),1);
+      panorama31.link( panorama30, new THREE.Vector3( 10,0,0 ),1);
+
+        </script>
+
+      </div>
+
+
+  </body>
+</html>
